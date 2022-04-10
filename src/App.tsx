@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Navbar from "./components/Navbar/navbar";
+import MainPage from "./components/MainPage/mainpage";
+import {Route, Routes, useNavigate} from "react-router-dom";
+import Login from "./components/LoginForm/login";
+
+// import Homepage from "../public/resources/Homepage.jpg"
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+    // const navigate = useNavigate()
+
+
+    // export function handleClick() {
+    //      navigate('/Login')
+    //  }
+
+    return (
+        <div className="App">
+
+            <Routes>
+
+                <Route path="/" element={
+                    <>
+                        <Navbar/>
+                        <img src={"/resources/Homepage.png"} alt={'Yo'}/>
+                        <MainPage/>
+                    </>
+                }/>
+                <Route path={'/login'} element={<Login/>}/>
+
+
+            </Routes>
+
+
+            {/*<Routes>*/}
+            {/*    <Route path="/Login" element={*/}
+            {/*        <>*/}
+
+            {/*        </>*/}
+            {/*    }/>*/}
+            {/*</Routes>*/}
+
+        </div>
+    );
 }
 
 export default App;
