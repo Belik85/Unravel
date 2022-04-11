@@ -1,31 +1,35 @@
-
+import {Dispatch} from "redux";
+import {authAPI, LoginDataType} from "../server/api";
 
 const LOGIN_USER = "LOGIN_USER";
 
 
 const initialState = {
-    user: null,
+    user: '',
     isAuthenticated: false
 }
 
 export const UserReduser = (state = initialState, action: any) => {
     switch (action.type) {
         case 'LOGIN_USER': {
-            return { ...state, user: action.user, isAuthenticated:true}
+            return {...state, user: action.user, isAuthenticated: true}
         }
         default:
             return state
     }
 }
 
-// export const getuser = (data:any) => (dispatch:any) => {
-//     const response = api.login(data)
-//     dispatch(loginUserAC)
-//     // dispatch({type: LOGIN_USER}, user: response.data)
-// }
 
-
-
-export const loginUserAC = (login: any) => {
-    ({type: LOGIN_USER, user: login})
+export const loginTC = (data: LoginDataType) => (dispatch: Dispatch) => {
+    authAPI.login(data)
+        .then((res) => {
+            if (res.status === 200) {
+                dispatch(loginUserAC("login"))
+            } else {
+                (res.data, dispatch);
+            }
+        })
 }
+
+
+export const loginUserAC = (login: string) => ({type: LOGIN_USER, user: login} as const)

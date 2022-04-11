@@ -1,17 +1,24 @@
 import React from 'react';
-import {applyMiddleware, createStore } from 'redux';
-import { combineReducers } from 'redux';
+import {applyMiddleware, combineReducers, createStore } from 'redux';
 import {UserReduser} from "./user-reduser"
-import thunkMiddleware from "redux-thunk";
 
+import {setLoginValueReducer} from './login-reduser';
+import {setPasswordValueReducer} from './password-reducer';
+
+
+import thunkMiddleware from 'redux-thunk'
 
 let rootReducer = combineReducers({
-    login: UserReduser
 
+    setLoginValue:  setLoginValueReducer,
+    setPasswordValue: setPasswordValueReducer,
+
+    login: UserReduser
 })
 
+export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+export type AppRootStateType = ReturnType<typeof rootReducer>
 
-export default store;
-
+// @ts-ignore
+window.store = store;
